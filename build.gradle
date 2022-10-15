@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://files.minecraftforge.net/maven"
+        }
+        maven {
+            url "https://repo.spongepowered.org/maven"
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT"
+        classpath "org.spongepowered:mixingradle:0.6-SNAPSHOT"
+    }
+}
+
+
+apply plugin: "net.minecraftforge.gradle.tweaker-client"
+apply plugin: "org.spongepowered.mixin"
+apply plugin: "java"
+
+version = "1.0.0"
+group = "poradnik"
+
+minecraft {
+    version = "1.8.9"
+    tweakClass = 'poradnik.mixin.Tweaker'
+    mappings = "stable_22"
+    runDir = "run"
+    makeObfSourceJar = false
+}
+sourceCompatibility = targetCompatibility = 1.8
+repositories {
+    maven {
+        name "jitpack"
+        url "https://jitpack.io"
+    }
+
+    maven {
+        name "spongepowered"
+        url "https://repo.spongepowered.org/maven/"
+    }
+    mavenCentral()
+}
+
+mixin {
+    defaultObfuscationEnv notch
+    add sourceSets.main, "mixins.poradnik.refmap.json"
+}
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+dependencies {
+    embed("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+        exclude module: "launchwrapper"
+        exclude module: "guava"
+        exclude module: "gson"
+        exclude module: "commons-io"
+    }
+    annotationProcessor 'org.spongepowered:mixin:0.7.11-SNAPSHOT'
+
+    implementation 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
+
+
