@@ -1,0 +1,9 @@
+{
+  "package": "poradnik.mixin.impl",
+  "compatibilityLevel": "JAVA_8",
+  "verbose": true,
+  "refmap": "mixins.poradnik.refmap.json",
+  "mixins": [
+    "client.MixinMinecraft"
+  ]
+}
